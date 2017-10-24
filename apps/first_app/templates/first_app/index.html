@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+
+<link rel="stylesheet" type="text/css" href="{% static 'first_app/dashboard.css' %}" />
+<head>
+	<title></title>
+</head>
+<body>
+<h1>Welcome {{this_user}}</h1>
+{% csrf_token %}
+
+<a href="/basket" shape="rect">Make a New Basket</a>
+</body>
+</html>

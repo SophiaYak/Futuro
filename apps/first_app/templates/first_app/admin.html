@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+
+<form action='/addcompany' method = 'post'>
+	{% csrf_token %}
+	<p> Name: <input type="text" name="name"></p>
+	<p> Symbol: <input type="text" name="symbol"></p>
+	<p> Price per Share: <input type="text" name="price"></p>
+	<input type="submit" value = "Add Company">
+</form>
+
+<form action= '/deletecompany' method = 'post'>
+{% csrf_token %}
+{% for company in companies %}
+<p>Company Name:{{company.name}} . Stock Symbol:{{company.symbol}} . Stock Price: {{company.price}}</p>
+<button type="submit">Delete</button>
+<input type="hidden" name="company_name" value= {{company.name}}>
+{% endfor %}
+</form>
+</body>
+</html>

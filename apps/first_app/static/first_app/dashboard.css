@@ -1,0 +1,11 @@
+body {
+	background-color: lightblue;
+}
+a {
+	
+	text-align: center;
+	color: white;
+	display: inline-block; 
+	font-size:50px;
+	text-align: center;
+}
