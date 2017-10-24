@@ -45,7 +45,10 @@ def delete(request):
 	User.objects.delete(request.POST['user'])
 	return redirect('/')
 
-
+def logout(request):
+	response =  render(request, "first_app/landing.html")
+	response.delete_cookie('user')
+	return response
 
 def basket(request):
 
