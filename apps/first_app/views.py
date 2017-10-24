@@ -56,8 +56,17 @@ def logout(request):
 	return response
 
 def basket(request):
-
-	return render(request, "first_app/basket.html")
+	context = {}
+	measure = {}
+	
+	#response.set_cookie('counts','1')
+	request.session['count'] = int(request.session.get('count',1))+1
+	count = request.session.get('count')
+	#mycount = int(request.COOKIES['counts'])
+	for items in range(0,count):
+		measure = { 'items': ""}
+	context = {'items': measure}
+	return render(request, "first_app/basket.html",context)
 
 def addbasket(request):
 	context = {'basket_name': request.POST['name']}
@@ -120,3 +129,9 @@ def lookup( request):
 	request.session[ 'bob'] = name
 
 	return redirect('/stock')
+def addlookup (request):
+	
+	response =  redirect('/basket')
+	#response.set_cookie('count',int(request.COOKIES['count',1])+1)
+	request.session['count'] = int(request.session.get('count',1)+1)
+	return response

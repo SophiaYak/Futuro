@@ -6,10 +6,16 @@
 <body>
 <form action= '/companylookup' method = 'post'>
 {% csrf_token %}
-Company 1:
+{% for n in items %}
+
 <input type = "text" name = 'symb'>
-<input type="hidden" name="number" value= "one">
+<input type="hidden" name=n value= "one">
 <input type = "submit" value = "Submit">
+{% endfor %}
+</form>
+<form action= '/addlookup' method="post">
+{% csrf_token %}
+<input type = "submit" value = "Add another Stock">
 </form>
 
 </body>
