@@ -1,4 +1,5 @@
 from django.db import models
+import datetime
 class UserManager(models.Manager):
 	def regchecks(self,post):
 		errors = []
@@ -47,7 +48,12 @@ class StockManager(models.Manager):
 class Stock(models.Model):
 	name = models.CharField(max_length=20)
 	symbol = models.CharField(max_length=20)
-	price = models.FloatField()
+	PE = models.DecimalField(max_digits=None, decimal_places=3)
+	change_pct = models.DecimalField(max_digits=None, decimal_places=5)
+	last = models.DecimalField(max_digits=None, decimal_places=3)
+	short_ratio = models.DecimalField(max_digits=None, decimal_places=2)
+	buying_date = models.DateTimeField(auto_now=False, auto_now_add = False,default= datetime.date.today())
+	current_date = models.DateTimeField(auto_now=False, auto_now_add = False,default= datetime.date.today())
 	objects = StockManager()
 
 class Basket(models.Model):
