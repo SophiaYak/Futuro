@@ -6,7 +6,7 @@ import pandas_datareader.data as web
 
 
 
-
+#Post to login
 def login(request):
 	context = {'user_username': request.POST['name'],'user_pass': request.POST['pass']}
 	result = User.objects.loginchecks(context)
@@ -20,7 +20,7 @@ def login(request):
 		for error in result['data']:
 			messages.error(request, error)
 		return redirect('/')
-	
+#post to register	
 def registration(request):
 	context = {'user_username': request.POST['username'], 'user_name': request.POST['name'],\
 	'user_email': request.POST['email'],'user_pass': request.POST['pass']}
@@ -35,20 +35,21 @@ def registration(request):
 		for error in result['data']:
 			messages.error(request, error)
 		return redirect('/')
+#dashboard
 def index(request):
 	context = {'this_user': request.COOKIES['user']}
 	response = render(request, "first_app/index.html", context)
 
 	return response 
-
+#first page
 def landing(request):
 	context = { 'members': User.objects.all()}
 	return render(request, "first_app/landing.html",context)
-
+#post to delete a user
 def delete(request):
 	User.objects.delete(request.POST['user'])
 	return redirect('/')
-
+#logouts a user
 def logout(request):
 	response =  render(request, "first_app/landing.html")
 	response.delete_cookie('user')
@@ -87,13 +88,35 @@ def deletecompany(request):
 	return redirect('/admin')
 
 def stock(request):
-	q = web.get_quote_yahoo('AMZN')
-	#df = pd.DataFrame(q)
-	df = pd.DataFrame(q, index = ['AMZN'])
-	#df= pd.DataFrame(q, index = ['AMZN'], columns = ['PE','change_pct','last','short_ratio','time'])
+	context = {}
+	key = request.session.keys()
+	for company in key:
+		name = request.session.get(company)
+		q = web.get_quote_yahoo(name)
+		#df = pd.DataFrame(q)
+		df = pd.DataFrame(q, index = [name])
+		#df= pd.DataFrame(q, index = ['AMZN'], columns = ['PE','change_pct','last','short_ratio','time'])
+		info ={'keys': company, 'all': df, 'name': name,'PE': df['PE'][0], 'change': df['change_pct'][0], \
+		'last': df['last'][0], 'short': df['short_ratio'][0], 'time': df['time'][0]}
+		context['companies'] =  info
 	
-	context ={'all': df, 'name': 'AMZN','PE': df['PE'][0], 'change': df['change_pct'][0], \
-	'last': df['last'][0], 'short': df['short_ratio'][0], 'time': df['time'][0]}
+
+	# name = request.session.get('bob')
+	# q = web.get_quote_yahoo(name)
+	# #df = pd.DataFrame(q)
+	# df = pd.DataFrame(q, index = [name])
+	# #df= pd.DataFrame(q, index = ['AMZN'], columns = ['PE','change_pct','last','short_ratio','time'])
+	# info ={'all': df, 'name': name,'PE': df['PE'][0], 'change': df['change_pct'][0], \
+	# 'last': df['last'][0], 'short': df['short_ratio'][0], 'time': df['time'][0]}
+	# context['bob'] =  info
+	#return render(request, "first_app/stock.html",context, keys)
+	# keys = {'marker': key}
+	# context ['keys']=key
 	return render(request, "first_app/stock.html",context)
 
+def lookup( request):
+	request.session.flush()
+	name = request.POST['symb']
+	request.session[ 'bob'] = name
 
+	return redirect('/stock')

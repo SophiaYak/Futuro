@@ -16,5 +16,5 @@ urlpatterns = [
 	url(r'^addbasket$',views.addbasket),
 	url(r'^logout$',views.logout),
 	url(r'^stock$',views.stock),
-
+	url(r'^companylookup$',views.lookup)
 ]

@@ -4,6 +4,13 @@
 	<title></title>
 </head>
 <body>
-Hello buddy
+<form action= '/companylookup' method = 'post'>
+{% csrf_token %}
+Company 1:
+<input type = "text" name = 'symb'>
+<input type="hidden" name="number" value= "one">
+<input type = "submit" value = "Submit">
+</form>
+
 </body>
 </html>
