@@ -14,6 +14,7 @@ urlpatterns = [
 	url(r'^(?P<user_name>)/(?P<bakset_name>)$',views.viewbasket),
 	url(r'^deletebasket$',views.deletebasket),
 	url(r'^addbasket$',views.addbasket),
-	url(r'^logout$',views.logout)
+	url(r'^logout$',views.logout),
+	url(r'^stock$',views.stock),
 
 ]

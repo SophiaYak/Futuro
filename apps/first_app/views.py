@@ -1,6 +1,10 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from .models import User,Stock,Basket
+import pandas as pd
+import pandas_datareader.data as web
+
+
 
 
 def login(request):
@@ -82,6 +86,14 @@ def deletecompany(request):
 	Stock.objects.delete(request.POST['company_name'])
 	return redirect('/admin')
 
-
+def stock(request):
+	q = web.get_quote_yahoo('AMZN')
+	#df = pd.DataFrame(q)
+	df = pd.DataFrame(q, index = ['AMZN'])
+	#df= pd.DataFrame(q, index = ['AMZN'], columns = ['PE','change_pct','last','short_ratio','time'])
+	
+	context ={'all': df, 'name': 'AMZN','PE': df['PE'][0], 'change': df['change_pct'][0], \
+	'last': df['last'][0], 'short': df['short_ratio'][0], 'time': df['time'][0]}
+	return render(request, "first_app/stock.html",context)
 
 

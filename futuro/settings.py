@@ -38,7 +38,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+  #  'rest_framework'
 ]
+
+# TEMPLATE_DIRS = [
+#     os.path.join(os.path.dirname(__file__), 'templates'),
+#     ]
+
+# EMBEDLY_KEY = '<dj0yJmk9RUxBUVBNUU1rdDFiJmQ9WVdrOWRFTjVSRnBFTkRRbWNHbzlNQS0tJnM9Y29uc3VtZXJzZWNyZXQmeD1jZA-->'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
