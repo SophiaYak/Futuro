@@ -1,5 +1,7 @@
 from django.db import models
 import datetime
+import pandas as pd
+import pandas_datareader.data as web
 class UserManager(models.Manager):
 	def regchecks(self,post):
 		errors = []
@@ -21,7 +23,7 @@ class UserManager(models.Manager):
 			errors.append("Username does not exist")
 			return {"succeed": False, "data": errors}
 		check=User.objects.filter(username=post['user_username']).filter(password = post['user_pass'])
-		if  check =={}:
+		if check =={}:
 			errors.append("Password did not match")
 			return {"succeed": False, "data": errors}
 		else:
@@ -44,16 +46,26 @@ class StockManager(models.Manager):
 		new = Stock.objects.create(name = post['company_name'],\
 			symbol = post['company_symbol'], price= post['company_price'])
 		return {"succeed": True, "data": new}
+	def newStock(self, post):
+		q = web.get_quote_yahoo(post)
+		#df = pd.DataFrame(q)
+		df = pd.DataFrame(q, index = [post])
+		#df= pd.DataFrame(q, index = ['AMZN'], columns = ['PE','change_pct','last','short_ratio','time'])
+		new  = Stock.objects.create(symbol =post, PE= df['PE'][0], \
+			change_pct= df['change_pct'][0],  last = df['last'][0],\
+			 short_ratio= df['short_ratio'][0],  current_date = df['time'][0])
+		context['companies'] =  info
+
 
 class Stock(models.Model):
 	name = models.CharField(max_length=20)
 	symbol = models.CharField(max_length=20)
-	PE = models.DecimalField(max_digits=None, decimal_places=3)
-	change_pct = models.DecimalField(max_digits=None, decimal_places=5)
-	last = models.DecimalField(max_digits=None, decimal_places=3)
-	short_ratio = models.DecimalField(max_digits=None, decimal_places=2)
-	buying_date = models.DateTimeField(auto_now=False, auto_now_add = False,default= datetime.date.today())
-	current_date = models.DateTimeField(auto_now=False, auto_now_add = False,default= datetime.date.today())
+	PE = models.DecimalField(max_digits=6, decimal_places=3)
+	change_pct = models.DecimalField(max_digits=5, decimal_places=5)
+	last = models.DecimalField(max_digits=6, decimal_places=3)
+	short_ratio = models.DecimalField(max_digits=3, decimal_places=2)
+	buying_date = models.DateTimeField(auto_now=False, auto_now_add = False,default= datetime.datetime.now())
+	current_date = models.DateField(auto_now=True, auto_now_add = False)
 	objects = StockManager()
 
 class Basket(models.Model):

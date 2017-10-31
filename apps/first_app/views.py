@@ -61,7 +61,7 @@ def basket(request):
 	
 	# response.set_cookie('counts','1')
 	# request.session['count'] = int(request.session.get('count',1))+1
-	count = request.session.get('count')
+	count = int(request.session.get('count',1))+1
 	#mycount = int(request.COOKIES['counts'])
 	for items in range(0,count):
 		measure = { items: ""}
@@ -101,13 +101,14 @@ def stock(request):
 	key = request.session.keys()
 	for company in key:
 		name = request.session.get(company)
-		q = web.get_quote_yahoo(name)
-		#df = pd.DataFrame(q)
-		df = pd.DataFrame(q, index = [name])
-		#df= pd.DataFrame(q, index = ['AMZN'], columns = ['PE','change_pct','last','short_ratio','time'])
-		info ={'keys': company, 'all': df, 'name': name,'PE': df['PE'][0], 'change': df['change_pct'][0], \
-		'last': df['last'][0], 'short': df['short_ratio'][0], 'time': df['time'][0]}
-		context['companies'] =  info
+
+		# q = web.get_quote_yahoo(name)
+		# #df = pd.DataFrame(q)
+		# df = pd.DataFrame(q, index = [name])
+		# #df= pd.DataFrame(q, index = ['AMZN'], columns = ['PE','change_pct','last','short_ratio','time'])
+		# info ={'keys': company, 'all': df, 'name': name,'PE': df['PE'][0], 'change': df['change_pct'][0], \
+		# 'last': df['last'][0], 'short': df['short_ratio'][0], 'time': df['time'][0]}
+		# context['companies'] =  info
 	
 
 	# name = request.session.get('bob')
@@ -121,6 +122,7 @@ def stock(request):
 	#return render(request, "first_app/stock.html",context, keys)
 	# keys = {'marker': key}
 	# context ['keys']=key
+	context={'all':Stock.objects.all()}
 	return render(request, "first_app/stock.html",context)
 
 def lookup( request):
@@ -133,5 +135,5 @@ def addlookup (request):
 	
 	response =  redirect('/basket')
 	#response.set_cookie('count',int(request.COOKIES['count',1])+1)
-	request.session['count'] = int(request.session.get('count',1)+1)
+	# request.session['count'] = int(request.session.get('count',1))
 	return response

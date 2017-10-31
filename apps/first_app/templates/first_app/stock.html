@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+
+
+<!-- <p>Name: {{bob.name}}; PE: {{bob.PE}}; Change_pct: {{bob.change}}; Last: {{bob.last}}; Short Ratio: {{bob.short}}; As of: {{bob.time}}</p> -->
+<p><!-- 
+{% for company  in companies %}
+Name: {{company.name}}; PE: {{company.PE}}; Change_pct: {{company.change}}; Last: {{company.last}}; Short Ratio: {{company.short}}; As of: {{company.time}} -->
+
+
+
+<!-- {% endfor %} -->
+
+{% for company in all%}
+Symbol: {{company.symbol}}; PE: {{company.PE}}; Change_pct: {{company.change_pct}}; Last: {{company.last}}; Short Ratio: {{company.short_ratio}}; As of: {{company.current}} 
+
+{% endfor %}
+
+
+
+</p>
+
+
+
+
+
+
+
+<!-- <p>{% for company  in keys %}
+
+
+Company Name:{{company.keys.all}} . Stock Symbol:{{info.company.symbol}} . Stock Price: {info.{company.price}}</p>
+
+
+
+{% endfor %} -->
+
+
+
+<!-- <p>{{all}}</p>
+<p>Name: {{name}}; PE: {{PE}}; Change_pct: {{change}}; Last: {{last}}; Short Ratio: {{short}}; As of: {{time}}</p> -->
+</body>
+</html>
