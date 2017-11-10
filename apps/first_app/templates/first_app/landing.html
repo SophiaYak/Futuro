@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title></title>
+  <title></title>
 </head>
 <body>
 {% if messages %}
@@ -13,19 +13,19 @@
 {% endif %}
 
 <form action='/login' method = 'post'>
-	{% csrf_token %}
-	<p> Username: <input type="text" name="name"></p>
-	<p> Password: <input type="text" name="pass"></p>
-	<input type="submit" value = "Login">
+  {% csrf_token %}
+  <p> Username: <input type="text" name="name"></p>
+  <p> Password: <input type="password" name="pass"></p>
+  <input type="submit" value = "Login">
 </form>
 
 <form action='/registration' method = 'post'>
-	{% csrf_token %}
-	<p> Name: <input type="text" name="name"></p>
-	<p> Username: <input type="text" name="username"></p>
-	<p> Email: <input type="text" name="email"></p>
-	<p> Password: <input type="text" name="pass"></p>
-	<input type="submit" value = "Register">
+  {% csrf_token %}
+  <p> Name: <input type="text" name="name"></p>
+  <p> Username: <input type="text" name="username"></p>
+  <p> Email: <input type="text" name="email"></p>
+  <p> Password: <input type="password" name="pass"></p>
+  <input type="submit" value = "Register">
 </form>
 
 <form action= '/delete' method = 'post'>
