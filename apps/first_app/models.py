@@ -5,7 +5,7 @@ import pandas_datareader.data as web
 class UserManager(models.Manager):
 	def regchecks(self,post):
 		errors = []
-		if (User.objects.filter(username=post['user_username'])) =={}:
+		if not (User.objects.filter(username=post['user_username'])) =={}:
 			errors.append("Username is already being used")
 		if not errors:
 			new = User.objects.create(username = post['user_username'],\
@@ -18,16 +18,19 @@ class UserManager(models.Manager):
 
 	def loginchecks(self,post):
 		errors = []
-		
-		if  (User.objects.filter(username=post['user_username'])) =={}:
+		existing = User.objects.filter(username=post['user_username'])
+		if existing =={}:
 			errors.append("Username does not exist")
-			return {"succeed": False, "data": errors}
-		check=User.objects.filter(username=post['user_username']).filter(password = post['user_pass'])
+			
+		check=User.objects.filter(username=post['user_username'], password = post['user_pass'])
 		if check =={}:
 			errors.append("Password did not match")
-			return {"succeed": False, "data": errors}
+		if not errors:
+			debug = {"succeed": True, "data": check}
 		else:
-			return {"succeed": True, "data": check}
+			debug = {"succeed": False, "data": errors}
+		return debug
+			
 	def getObject(self, post):
 		return  User.objects.get(username = post)
 
