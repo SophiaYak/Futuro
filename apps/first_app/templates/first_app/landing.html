@@ -3,7 +3,19 @@
 <head>
   <title></title>
 </head>
+<style>
+ 
+  body{
+        background-image: url("https://i.imgur.com/MBLi5oT.jpg");
+        background-position: center;
+        background-repeat: no-repeat;
+
+
+
+  }
+</style>
 <body>
+
 {% if messages %}
     <ul class="messages">
         {% for message in messages %}
@@ -12,29 +24,29 @@
     </ul>
 {% endif %}
 <!-- LOGIN FORM -->
-<div class="text-center" style="padding:50px 0">
-  <div class="logo">Login</div>
+  <h2 align="center">Login</h2>
 <form action='/login' method = 'post'>
   {% csrf_token %}
-  <p> Username: <input type="text" name="name"></p>
-  <p> Password: <input type="password" name="pass"></p>
-  <input type="submit" value = "Login">
+  <p align="center"> Username: <input type="text" placeholder="username" name="name"></p>
+  <p align="center"> Password: <input type="password" placeholder="password" name="pass"></p>
+  <p align="center"><input type="submit" value = "Login">
 </form>
 
 <form action='/registration' method = 'post'>
   {% csrf_token %}
-  <p> Name: <input type="text" name="name"></p>
-  <p> Username: <input type="text" name="username"></p>
-  <p> Email: <input type="email" placeholder="example@example.com" name="email"></p>
-  <p> Password: <input type="password" name="pass"></p>
-  <input type="submit" value = "Register">
+    <h2 align="center">Register</h2>
+  <p align="center"> Name: <input type="text" placeholder="Full Name" name="name"></p>
+  <p align="center"> Username: <input type="text" placeholder="username" name="username " ></p>
+  <p align="center"> Email: <input type="email" placeholder="example@example.com" name="email"></p>
+  <p align="center"> Password: <input type="password" placeholder="password" name="pass"></p>
+  <p align="center"><input type="submit" value = "Register">
 </form>
 
 <form action= '/delete' method = 'post'>
 {% csrf_token %}
 {% for member in members %}
-<p>username:{{member.username}}  pass:{{member.password}}</p>
-<button type="submit">Delete</button>
+<p align="right">username:{{member.username}}  pass:{{member.password}}</p>
+<p align="right"><button type="submit">Delete</button>
 <input type="hidden" name="user" value= {{member.username}}>
 {% endfor %}
 </form>
