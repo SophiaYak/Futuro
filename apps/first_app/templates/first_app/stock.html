@@ -16,10 +16,13 @@ Name: {{company.name}}; PE: {{company.PE}}; Change_pct: {{company.change}}; Last
 			 adj_close= df['Adj Close'][0],  current_date = start) -->
 
 <!-- {% endfor %} -->
-
+<h1>The Average difference is {{score}}
+</h1>
+<h>Details
+</h>
 {% for company in all%}
-Symbol: {{company.symbol}}; Open: {{company.open_price}}; High: {{company.high_price}}; Low: {{company.low_price}}; Adj Close: {{company.adj_close}}; As of: {{company.current_date}} 
-
+<p>Symbol: {{company.symbol}}; Open: {{company.open_price}}; High: {{company.high_price}}; Low: {{company.low_price}}; Adj Close: {{company.adj_close}}; Volume: {{company.volume}} Difference between High and Low: {{company.diff}} As of: {{company.current_date}} 
+</p>
 {% endfor %}
 
 
