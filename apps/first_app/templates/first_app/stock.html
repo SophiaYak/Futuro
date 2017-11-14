@@ -11,12 +11,14 @@
 {% for company  in companies %}
 Name: {{company.name}}; PE: {{company.PE}}; Change_pct: {{company.change}}; Last: {{company.last}}; Short Ratio: {{company.short}}; As of: {{company.time}} -->
 
-
+<!-- new  = Stock.objects.create(symbol =post, open_price= df['Open'][0], \
+			high_price= df['High'][0],  low_price = df['Low'][0],\
+			 adj_close= df['Adj Close'][0],  current_date = start) -->
 
 <!-- {% endfor %} -->
 
 {% for company in all%}
-Symbol: {{company.symbol}}; PE: {{company.PE}}; Change_pct: {{company.change_pct}}; Last: {{company.last}}; Short Ratio: {{company.short_ratio}}; As of: {{company.current}} 
+Symbol: {{company.symbol}}; Open: {{company.open_price}}; High: {{company.high_price}}; Low: {{company.low_price}}; Adj Close: {{company.adj_close}}; As of: {{company.current_date}} 
 
 {% endfor %}
 

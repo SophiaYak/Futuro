@@ -101,7 +101,7 @@ def stock(request):
 	key = request.session.keys()
 	for company in key:
 		name = request.session.get(company)
-
+		Stock.objects.newStock(name)
 		# q = web.get_quote_yahoo(name)
 		# #df = pd.DataFrame(q)
 		# df = pd.DataFrame(q, index = [name])
@@ -122,13 +122,14 @@ def stock(request):
 	#return render(request, "first_app/stock.html",context, keys)
 	# keys = {'marker': key}
 	# context ['keys']=key
+
 	context={'all':Stock.objects.all()}
 	return render(request, "first_app/stock.html",context)
 
 def lookup( request):
 	request.session.flush()
 	name = request.POST['symb']
-	request.session[ 'bob'] = name
+	request.session[ 'symb'] = name
 
 	return redirect('/stock')
 def addlookup (request):

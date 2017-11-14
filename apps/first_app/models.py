@@ -5,7 +5,7 @@ import pandas_datareader.data as web
 class UserManager(models.Manager):
 	def regchecks(self,post):
 		errors = []
-		if not (User.objects.filter(username=post['user_username'])) =={}:
+		if (User.objects.filter(username=post['user_username'])):
 			errors.append("Username is already being used")
 		if not errors:
 			new = User.objects.create(username = post['user_username'],\
@@ -19,7 +19,7 @@ class UserManager(models.Manager):
 	def loginchecks(self,post):
 		errors = []
 		existing = User.objects.filter(username=post['user_username'])
-		if existing =={}:
+		if not existing:
 			errors.append("Username does not exist")
 			
 		check=User.objects.filter(username=post['user_username'], password = post['user_pass'])
@@ -66,22 +66,22 @@ class StockManager(models.Manager):
 		# 	 short_ratio= df['short_ratio'][0],  current_date = df['time'][0])
 		new  = Stock.objects.create(symbol =post, open_price= df['Open'][0], \
 			high_price= df['High'][0],  low_price = df['Low'][0],\
-			 adj_close= df['Adj Close'][0],  current_date = start)
+			 adj_close= df['Adj Close'][0], volume = df['Volume'][0], current_date = start)
 
 class Stock(models.Model):
 	name = models.CharField(max_length=20)
 	symbol = models.CharField(max_length=20)
-	PE = models.DecimalField(max_digits=6, decimal_places=3)
-	change_pct = models.DecimalField(max_digits=5, decimal_places=5)
-	last = models.DecimalField(max_digits=6, decimal_places=3)
-	short_ratio = models.DecimalField(max_digits=3, decimal_places=2)
+	PE = models.DecimalField(max_digits=6, decimal_places=3,default=0)
+	change_pct = models.DecimalField(max_digits=5, decimal_places=5,default=0)
+	last = models.DecimalField(max_digits=6, decimal_places=3,default=0)
+	short_ratio = models.DecimalField(max_digits=3, decimal_places=2,default=0)
 	buying_date = models.DateTimeField(auto_now=False, auto_now_add = False,default= datetime.datetime.now())
-	current_date = models.DateField(auto_now=True, auto_now_add = False)
-	open_price= models.DecimalField(max_digits=5, decimal_places=2)
-	high_price= models.DecimalField(max_digits=5, decimal_places=2)
-	low_price= models.DecimalField(max_digits=5, decimal_places=2)
-	close_price= models.DecimalField(max_digits=5, decimal_places=2)
-	adj_close= models.DecimalField(max_digits=5, decimal_places=2)
+	current_date = models.DateField(auto_now=False, auto_now_add = False,default= datetime.datetime.now())
+	open_price= models.DecimalField(max_digits=5, decimal_places=2,default=0)
+	high_price= models.DecimalField(max_digits=5, decimal_places=2,default=0)
+	low_price= models.DecimalField(max_digits=5, decimal_places=2,default=0)
+	close_price= models.DecimalField(max_digits=5, decimal_places=2,default=0)
+	adj_close= models.DecimalField(max_digits=5, decimal_places=2,default=0)
 	volume= models.IntegerField()
 	objects = StockManager()
 
