@@ -50,9 +50,9 @@ class StockManager(models.Manager):
 			symbol = post['company_symbol'], price= post['company_price'])
 		return {"succeed": True, "data": new}
 	def newStock(self, post):
-		start = datetime.date.today()
-		end = datetime.date.today()
-		df = web.DataReader("F", 'yahoo', start, end)
+		start = Stock.objects.mostRecent()
+		end = start
+		df = web.DataReader(post, "yahoo", start, end)
 		# q = web.get_quote_yahoo(post)
 		# #df = pd.DataFrame(q)
 		# df = pd.DataFrame(q, index = [post])
@@ -67,6 +67,16 @@ class StockManager(models.Manager):
 		new  = Stock.objects.create(symbol =post, open_price= df['Open'][0], \
 			high_price= df['High'][0],  low_price = df['Low'][0],\
 			 adj_close= df['Adj Close'][0], volume = df['Volume'][0], current_date = start)
+	def mostRecent(self):
+		if datetime.datetime.today().hour<6:
+			current= datetime.datetime.today()
+			if current.day>1:
+				date = current.replace(day=datetime.datetime.today().day-1)
+			else:
+				date = current.replace(month =datetime.datetime.today().month-1, day=28)
+		else:
+			date = datetime.datetime.today()
+		return date
 
 class Stock(models.Model):
 	name = models.CharField(max_length=20)
@@ -77,11 +87,11 @@ class Stock(models.Model):
 	short_ratio = models.DecimalField(max_digits=3, decimal_places=2,default=0)
 	buying_date = models.DateTimeField(auto_now=False, auto_now_add = False,default= datetime.datetime.now())
 	current_date = models.DateField(auto_now=False, auto_now_add = False,default= datetime.datetime.now())
-	open_price= models.DecimalField(max_digits=5, decimal_places=2,default=0)
-	high_price= models.DecimalField(max_digits=5, decimal_places=2,default=0)
-	low_price= models.DecimalField(max_digits=5, decimal_places=2,default=0)
-	close_price= models.DecimalField(max_digits=5, decimal_places=2,default=0)
-	adj_close= models.DecimalField(max_digits=5, decimal_places=2,default=0)
+	open_price= models.DecimalField(max_digits=10, decimal_places=6,default=0)
+	high_price= models.DecimalField(max_digits=10, decimal_places=6,default=0)
+	low_price= models.DecimalField(max_digits=10, decimal_places=6,default=0)
+	close_price= models.DecimalField(max_digits=10, decimal_places=6,default=0)
+	adj_close= models.DecimalField(max_digits=10, decimal_places=6,default=0)
 	volume= models.IntegerField()
 	objects = StockManager()
 
