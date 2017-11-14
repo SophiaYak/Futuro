@@ -50,7 +50,9 @@ class StockManager(models.Manager):
 			symbol = post['company_symbol'], price= post['company_price'])
 		return {"succeed": True, "data": new}
 	def newStock(self, post):
-		f = web.DataReader("F", 'yahoo', start, end)
+		start = datetime.date.today()
+		end = datetime.date.today()
+		df = web.DataReader("F", 'yahoo', start, end)
 		# q = web.get_quote_yahoo(post)
 		# #df = pd.DataFrame(q)
 		# df = pd.DataFrame(q, index = [post])
@@ -59,9 +61,12 @@ class StockManager(models.Manager):
 		# 	change_pct= df['change_pct'][0],  last = df['last'][0],\
 		# 	 short_ratio= df['short_ratio'][0],  current_date = df['time'][0])
 		# context['companies'] =  info
-		new  = Stock.objects.create(symbol =post, PE= df['PE'][0], \
-			change_pct= df['change_pct'][0],  last = df['last'][0],\
-			 short_ratio= df['short_ratio'][0],  current_date = df['time'][0])
+		# new  = Stock.objects.create(symbol =post, PE= df['PE'][0], \
+		# 	change_pct= df['change_pct'][0],  last = df['last'][0],\
+		# 	 short_ratio= df['short_ratio'][0],  current_date = df['time'][0])
+		new  = Stock.objects.create(symbol =post, open_price= df['Open'][0], \
+			high_price= df['High'][0],  low_price = df['Low'][0],\
+			 adj_close= df['Adj Close'][0],  current_date = start)
 
 class Stock(models.Model):
 	name = models.CharField(max_length=20)
@@ -72,7 +77,14 @@ class Stock(models.Model):
 	short_ratio = models.DecimalField(max_digits=3, decimal_places=2)
 	buying_date = models.DateTimeField(auto_now=False, auto_now_add = False,default= datetime.datetime.now())
 	current_date = models.DateField(auto_now=True, auto_now_add = False)
+	open_price= models.DecimalField(max_digits=5, decimal_places=2)
+	high_price= models.DecimalField(max_digits=5, decimal_places=2)
+	low_price= models.DecimalField(max_digits=5, decimal_places=2)
+	close_price= models.DecimalField(max_digits=5, decimal_places=2)
+	adj_close= models.DecimalField(max_digits=5, decimal_places=2)
+	volume= models.IntegerField()
 	objects = StockManager()
+
 
 class Basket(models.Model):
 	name = models.CharField(max_length=20)
