@@ -23,7 +23,7 @@ class UserManager(models.Manager):
 			errors.append("Username does not exist")
 			
 		check=User.objects.filter(username=post['user_username'], password = post['user_pass'])
-		if check =={}:
+		if not check:
 			errors.append("Password did not match")
 		if not errors:
 			debug = {"succeed": True, "data": check}
@@ -50,15 +50,18 @@ class StockManager(models.Manager):
 			symbol = post['company_symbol'], price= post['company_price'])
 		return {"succeed": True, "data": new}
 	def newStock(self, post):
-		q = web.get_quote_yahoo(post)
-		#df = pd.DataFrame(q)
-		df = pd.DataFrame(q, index = [post])
-		#df= pd.DataFrame(q, index = ['AMZN'], columns = ['PE','change_pct','last','short_ratio','time'])
+		f = web.DataReader("F", 'yahoo', start, end)
+		# q = web.get_quote_yahoo(post)
+		# #df = pd.DataFrame(q)
+		# df = pd.DataFrame(q, index = [post])
+		# #df= pd.DataFrame(q, index = ['AMZN'], columns = ['PE','change_pct','last','short_ratio','time'])
+		# new  = Stock.objects.create(symbol =post, PE= df['PE'][0], \
+		# 	change_pct= df['change_pct'][0],  last = df['last'][0],\
+		# 	 short_ratio= df['short_ratio'][0],  current_date = df['time'][0])
+		# context['companies'] =  info
 		new  = Stock.objects.create(symbol =post, PE= df['PE'][0], \
 			change_pct= df['change_pct'][0],  last = df['last'][0],\
 			 short_ratio= df['short_ratio'][0],  current_date = df['time'][0])
-		context['companies'] =  info
-
 
 class Stock(models.Model):
 	name = models.CharField(max_length=20)
