@@ -1,59 +1,148 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title></title>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
-</head>
-<style>
-</style>
-<body>
+  <head>
+    <title></title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+    <link href='https://fonts.googleapis.com/css?family=Raleway' rel='stylesheet'>
+    <style>
+        .navbar-header{
+           left: 50%;
+           position: relative;
+           transform: translateX(-50%);
+        }
+        .mybutton {
+          cursor: pointer;
+        }
+        .btn-primary {
+          color: #fff;
+          background-color: #769d83;
+          border-color: #769d83; 
+        }
+         .btn-secondary {
+          color: #fff;
+          background-color: #767676;
+          border-color: #767676; 
+        }
+        .btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .open>.dropdown-toggle.btn-primary {
+            color: #fff;
+            background-color: #2e5c3e;
+            border-color: #2e5c3e; /*set the color you want here*/
+          }
+        .btn-secondary:hover, .btn-secondary:focus, .btn-secondary:active, .btn-secondary.active, .open>.dropdown-toggle.btn-secondary {
+            color: #fff;
+            background-color: #353535;
+            border-color: #353535; /*set the color you want here*/
+          }
+          .btn:focus {
+             outline: none !important;
+             box-shadow: none;
+          }
+            </style>
+  </head>   
 
-<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+  <body>
 
-<!-- Image and text -->
-<nav class="navbar navbar-light bg-faded">
-  <a class="navbar-brand" href="#">
-    <img src="https://i.imgur.com/MBLi5oT.jpg" width="70" height="70" class="d-inline-block align-top" alt="">
-    Futuro
-  </a>
-</nav>
+  <!-- Logo Navbar -->
+   <nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">
+            <img alt="Brand" src="https://i.imgur.com/xi0r6UY.png" width="150" height="150">
+          </a>
+        </div>
+      </div>
+   </nav>
 
-{% if messages %}
-    <ul class="messages">
-        {% for message in messages %}
-        <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
-        {% endfor %}
-    </ul>
-{% endif %}
-<!-- LOGIN FORM -->
-  <h2 align="center">Login</h2>
-<form action='/login' method = 'post'>
-  {% csrf_token %}
-  <p align="center"> Username: <input type="text" placeholder="username" name="name"></p>
-  <p align="center"> Password: <input type="password" placeholder="password" name="pass"></p>
-  <p align="center"><input type="submit" value = "Login">
-</form>
+  <!-- Login Form -->
 
-<form action='/registration' method = 'post'>
-  {% csrf_token %}
-    <h2 align="center">Register</h2>
-  <p align="center"> Name: <input type="text" placeholder="Full Name" name="name"></p>
-  <p align="center"> Username: <input type="text" placeholder="username" name="username" ></p>
-  <p align="center"> Email: <input type="email" placeholder="example@example.com" name="email"></p>
-  <p align="center"> Password: <input type="password" placeholder="password" name="pass"></p>
-  <p align="center"><input type="submit" value = "Register">
-</form>
+  <h2 align="center" style=" padding-top: 30px; margin-bottom: 0px; font-family: Raleway; color: #5d895f; font-size: 17pt; font-weight: bold; letter-spacing: 2px;">Login</h2>
+  <form  style="margin: 0 auto; width: 250px;"action = '/login' method = 'post'>
+    {% csrf_token %}
+    <div class="form-group">
+      <label for="Username1">Username</label>
+      <input type="Username" class="form-control" id="Username1" placeholder="Enter Your Username" name="name">
+    </div>
+    <div class="form-group">
+      <label for="exampleInputPassword1">Password</label>
+      <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Enter Your Password" name="pass">
+    </div>
+    <div align="center">
+      <button type="submit" class="btn btn-primary mybutton" value="Login">Login</button>
+      
+      <!-- Register Button for Modal -->
+      <button type="button" class="btn btn-secondary mybutton" data-toggle="modal" data-target="#exampleModal">
+      Register
+      </button>
+    </div>
+  </form>
+ 
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+   
+    <div class="modal-dialog" role="document">
 
-<form action= '/delete' method = 'post'>
-{% csrf_token %}
-{% for member in members %}
-<p align="right">username:{{member.username}}  pass:{{member.password}}</p>
-<p align="right"><button type="submit">Delete</button>
-<input type="hidden" name="user" value= {{member.username}}>
-{% endfor %}
-</form>
+      <div class="modal-content">
 
-</body>
+        <!--Modal Header-->
+        <div class="modal-header">
+          <h5 style="padding-left: 150px;" class="modal-title" id="exampleModalLabel">Registration Form</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+
+        <!--Modal Body-->
+        <div class="modal-body">
+
+          <!--Form-->
+            <form style="margin: 0 auto; width: 250px;" action='/registration' method='post'>
+             {% csrf_token %}
+            <div class="form-group">
+              <label for="exampleInputName2">Name</label>
+              <input type="text" class="form-control" id="exampleInputName1" placeholder="Type Your Full Name" name="name">
+            </div>
+            <div class="form-group">
+              <label for="exampleInputName2">Username</label>
+              <input type="text" class="form-control" id="exampleInputUsername" placeholder="Create a Username" name="username">
+            </div>
+             <div class="form-group">
+              <label for="exampleInputEmail2">Email</label>
+              <input type="email" class="form-control" id="exampleInputEmail" placeholder="janedoe@example.com" name="email">
+            </div>
+            <div class="form-group">
+              <label for="exampleInputPassword1">Password</label>
+              <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Create a Password" name="pass">
+            </div>
+             <button type="submit" class="btn btn-primary mybutton" value="Register">Register</button>
+             <button type="button" class="btn btn-secondary mybutton" data-dismiss="modal">Close</button>
+          </form> 
+        </div>  
+      </div>
+    </div>
+  </div>
+
+  <div style="padding-top: 20px;" align="center">
+    <form action= '/delete' method = 'post'>
+      {% csrf_token %}
+      {% for member in members %}
+      <p>username: {{member.username}} <br> pass: {{member.password}}</p>
+      <p><button type="submit">Delete</button>
+      <input type="hidden" name="user" value= {{member.username}}>
+      {% endfor %}
+    </form>
+  </div>
+
+    {% if messages %}
+        <div align="center" class="messages">
+            {% for message in messages %}
+            <p{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</p>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+
+  </body>
 </html>
