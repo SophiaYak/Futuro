@@ -54,6 +54,14 @@ class StockManager(models.Manager):
 		end = Stock.objects.mostRecent()
 		start= Stock.objects.recentPrior(day_range,end)
 		df = web.DataReader(post, "yahoo", start, end)
+		
+		add = 0
+		for entry in range (0,day_range-1):			
+			new  = Stock.objects.create(symbol =post, open_price= df['Open'][entry], \
+				high_price= df['High'][entry],  low_price = df['Low'][entry], diff=df['High'][entry]-df['Low'][entry],\
+				 adj_close= df['Adj Close'][entry], volume = df['Volume'][entry], current_date = start+timedelta(days=entry))
+			add += df['High'][entry]-df['Low'][entry]
+		return add/day_range-1
 		# q = web.get_quote_yahoo(post)
 		# #df = pd.DataFrame(q)
 		# df = pd.DataFrame(q, index = [post])
@@ -65,13 +73,6 @@ class StockManager(models.Manager):
 		# new  = Stock.objects.create(symbol =post, PE= df['PE'][0], \
 		# 	change_pct= df['change_pct'][0],  last = df['last'][0],\
 		# 	 short_ratio= df['short_ratio'][0],  current_date = df['time'][0])
-		add = 0
-		for entry in range (0,day_range-1):			
-			new  = Stock.objects.create(symbol =post, open_price= df['Open'][entry], \
-				high_price= df['High'][entry],  low_price = df['Low'][entry], diff=df['High'][entry]-df['Low'][entry],\
-				 adj_close= df['Adj Close'][entry], volume = df['Volume'][entry], current_date = start+timedelta(days=entry))
-			add += df['High'][entry]-df['Low'][entry]
-		return add/day_range-1
 	def mostRecent(self):
 		return datetime.today()
 	def recentPrior(self,number,start):

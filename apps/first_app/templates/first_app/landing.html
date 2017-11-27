@@ -46,14 +46,14 @@
   <p align="center"><input type="submit" value = "Register">
 </form>
 
-<form action= '/delete' method = 'post'>
+<!-- <form action= '/delete' method = 'post'>
 {% csrf_token %}
 {% for member in members %}
 <p align="right">username:{{member.username}}  pass:{{member.password}}</p>
 <p align="right"><button type="submit">Delete</button>
 <input type="hidden" name="user" value= {{member.username}}>
 {% endfor %}
-</form>
+</form> -->
 
 </body>
 </html>
