@@ -57,16 +57,11 @@ def logout(request):
 	return response
 
 def basket(request):
-	context = {}
+	context = {"number": ["one","two","three"]}
 	measure = {}
+		
 	
-	# response.set_cookie('counts','1')
-	# request.session['count'] = int(request.session.get('count',1))+1
-	count = int(request.session.get('count',1))+1
-	#mycount = int(request.COOKIES['counts'])
-	for items in range(0,count):
-		measure = { items: ""}
-	context = {'items': measure}
+	
 	return  render(request, "first_app/basket.html",context)
 
 def addbasket(request):
