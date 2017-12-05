@@ -1,19 +1,78 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title></title>
+	<script src="https://use.fontawesome.com/47d32999eb.js"></script>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+   	<link href='https://fonts.googleapis.com/css?family=Raleway' rel='stylesheet'>
+	<title>Futuro</title>
+	<style>
+		.navbar-header{
+           left: 50%;
+           position: relative;
+           transform: translateX(-50%);
+        }
+        .fa-plus-circle {
+        	color: #769d83;
+        }
+        .fa-plus-circle:hover {
+        	vertical-align: middle;
+    		color: #aae0bc;
+    		font-size: 100px;
+    		transition: color .3s ease, font-size 0.3s ease;
+		}
+		.mybutton {
+          cursor: pointer;
+        }
+        .btn-primary {
+          color: #fff;
+          background-color: #769d83;
+          border-color: #769d83; 
+        }
+         .btn-secondary {
+          color: #fff;
+          background-color: #767676;
+          border-color: #767676; 
+        }
+        .btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .open>.dropdown-toggle.btn-primary {
+            color: #fff;
+            background-color: #2e5c3e;
+            border-color: #2e5c3e; /*set the color you want here*/
+          }
+        .btn-secondary:hover, .btn-secondary:focus, .btn-secondary:active, .btn-secondary.active, .open>.dropdown-toggle.btn-secondary {
+            color: #fff;
+            background-color: #353535;
+            border-color: #353535; /*set the color you want here*/
+          }
+          .btn:focus {
+             outline: none !important;
+             box-shadow: none;
+          }
+    </style>
 </head>
 <body>
-<form action= '/companylookup' method = 'post'>
-{% csrf_token %}
-{% for n in number %}
-<p>{{n}} Company:
-<input type = "text" name = {{n}}>
 
-</p>
-{% endfor %}
-<input type = "submit" value = "Submit">
-</form>
+  <!-- Logo -->
+   <nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">
+            <img alt="Brand" src="https://i.imgur.com/xi0r6UY.png" width="150" height="150">
+          </a>
+        </div>
+      </div>
+   </nav>
+
+   <h6 style="text-align: center; padding-top: 30px; margin-bottom: -20px;">Please Input the Company's Stock Symbol</h6>
+
+	<form style="padding-top: 40px; padding-left: 30px; margin: 0 auto; width: 250px;" action= '/companylookup' method = 'post'>
+		{% csrf_token %}
+		{% for n in number %}
+		<p>{{n}} Company:
+			<input type="text" name = {{n}} style="text-transform: uppercase"/>
+		</p>
+		{% endfor %}
+		<input style="margin-left: 55px;" type="submit" class="btn btn-primary mybutton" value="Submit">
+	</form>	
 
 
 </body>
