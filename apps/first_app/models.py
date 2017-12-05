@@ -49,19 +49,22 @@ class StockManager(models.Manager):
 		new = Stock.objects.create(name = post['company_name'],\
 			symbol = post['company_symbol'], price= post['company_price'])
 		return {"succeed": True, "data": new}
-	def newStock(self, post):
-		day_range=7
-		end = Stock.objects.mostRecent()
-		start= Stock.objects.recentPrior(day_range,end)
-		df = web.DataReader(post, "yahoo", start, end)
-		
+
+	def newStock(self, post, start, end=datetime.today()):
+		df = web.DataReader(post, "yahoo", start,end)
 		add = 0
-		for entry in range (0,day_range-1):			
+		totalshares=0
+		index = pd.bdate_range(start,end)
+		for entry in index.date:			
 			new  = Stock.objects.create(symbol =post, open_price= df['Open'][entry], \
 				high_price= df['High'][entry],  low_price = df['Low'][entry], diff=df['High'][entry]-df['Low'][entry],\
-				 adj_close= df['Adj Close'][entry], volume = df['Volume'][entry], current_date = start+timedelta(days=entry))
-			add += df['High'][entry]-df['Low'][entry]
-		return add/day_range-1
+				 adj_close= df['Adj Close'][entry], volume = df['Volume'][entry], current_date = index.date[entry])
+			add += (df['Volume'][entry]*df['Adj Close'][entry])
+			totalshares += df['Volume'][entry]
+		return add/totalshares
+		
+
+
 		# q = web.get_quote_yahoo(post)
 		# #df = pd.DataFrame(q)
 		# df = pd.DataFrame(q, index = [post])
@@ -73,10 +76,14 @@ class StockManager(models.Manager):
 		# new  = Stock.objects.create(symbol =post, PE= df['PE'][0], \
 		# 	change_pct= df['change_pct'][0],  last = df['last'][0],\
 		# 	 short_ratio= df['short_ratio'][0],  current_date = df['time'][0])
+
+
+
+		
 	def mostRecent(self):
-		return datetime.today()
+		return datetime.today()-timedelta(days=1)
 	def recentPrior(self,number,start):
-		current = start-timedelta(days=number)
+		current = start-timedelta(days=number+1)
 		return current
 
 class Stock(models.Model):

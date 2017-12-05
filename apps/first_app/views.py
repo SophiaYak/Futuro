@@ -3,6 +3,7 @@ from django.contrib import messages
 from .models import User,Stock,Basket
 import pandas as pd
 import pandas_datareader.data as web
+from datetime import datetime, timedelta
 
 
 
@@ -99,9 +100,11 @@ def deletecompany(request):
 def stock(request):
 	context = {}
 	key = request.session.keys()
+	end = datetime.today()
+	start = end-timedelta(days=10)
 	for company in key:
 		name = request.session.get(company)
-		score = Stock.objects.newStock(name)
+		score = Stock.objects.newStock(name,start)
 		# q = web.get_quote_yahoo(name)
 		# #df = pd.DataFrame(q)
 		# df = pd.DataFrame(q, index = [name])
