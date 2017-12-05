@@ -38,8 +38,8 @@ class UserManager(models.Manager):
 		User.objects.filter(username =post).delete()
 class BasketManager(models.Manager):
 	errors = []
-	def basketchecks(self,post):
-		new = Basket.objects.create(name= post['basket_name'])
+	def basketchecks(self,post,stock):
+		new = Basket.objects.create(name= post, my_stock= Stock.objects.createStock(stock))
 		return {"succeed": True, "data": new}
 class StockManager(models.Manager):
 	errors = []
@@ -78,7 +78,8 @@ class StockManager(models.Manager):
 		return add/totalshares
 
 
-
+	def createStock(self, post):
+		new = Stock.objects.create(name = post[0], score = post[1])
 
 
 
@@ -92,6 +93,7 @@ class StockManager(models.Manager):
 class Stock(models.Model):
 	name = models.CharField(max_length=20)
 	symbol = models.CharField(max_length=20)
+	score = models.DecimalField(max_digits=5, decimal_places=2,default=0)
 	PE = models.DecimalField(max_digits=6, decimal_places=3,default=0)
 	change_pct = models.DecimalField(max_digits=5, decimal_places=5,default=0)
 	last = models.DecimalField(max_digits=6, decimal_places=3,default=0)

@@ -39,7 +39,7 @@ def registration(request):
 #dashboard
 def index(request):
 	context = {'this_user': request.COOKIES['user']}
-	response = render(request, "first_app/index.html", context)
+	response = render(request, "first_app/index.html",context)
 
 	return response 
 #first page
@@ -94,7 +94,8 @@ def deletecompany(request):
 
 def stock(request):
 	context = {}
-	values ={}
+	values = {}
+	ranking= []
 	key = request.session.keys()
 	end = datetime.today()
 	start = end-timedelta(days=10)
@@ -102,10 +103,22 @@ def stock(request):
 		name = request.session.get(company)
 		score = Stock.objects.newStock(name)
 		values.update({company:[name,score]})
-		
+		# if ranking == []:
+		# 	ranking.insert(0,{'name': name,'score': score})
+		# else:
+		# 	placed = False
+		# 	for item in ranking:
+				
+		# 		if item['score'] > score:
+		# 			ranking.insert(index(item),{'name': name,'score': score})
+		# 			placed = True
+		# 	if not placed:
+		# 		ranking.append({'name': name,'score': score})
 
-	context.update({'values': values, 'items': key})
-	return render(request, "first_app/stock.html",context)
+	context.update({'values': values, 'items': key , 'ranking': ranking})
+	response = render(request, "first_app/stock.html",context)
+	response.set_cookie('values', values)
+	return response
 
 def lookup( request):
 	request.session.flush()
@@ -118,6 +131,16 @@ def lookup( request):
 
 	return response
 def scoring (request):
+	if request.Post['one']:
+		context = request.COOKIES['values']['compone']
+	elif request.Post['two']:
+		context = request.COOKIES['values']['comptwo']
+	elif request.Post['three']:
+		context = request.COOKIES['values']['compthree']
+	else:
+		context = []
+	Basket.objects.basketchecks(self,"Basekt One",context)
+
 
 
 	return redirect('/stock')
