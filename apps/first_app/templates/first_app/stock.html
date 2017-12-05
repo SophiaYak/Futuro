@@ -53,39 +53,43 @@
       </div>
    </nav>
 
+
+
 	<H2 style="text-align: center; padding-top: 30px;">DETAILS</H2>
 	
 	<form style="margin: 0 auto; width: 550px; padding-top: 20px;" action= '/scoring' method = 'post'>
 	
 
-	<div class="card text-white bg-dark mb-3" style="margin: 0 auto; padding: 20px;  ">
+	<div class="card text-white bg-dark mb-3" style="margin: 0 auto; padding: 20px; ">
 		{% csrf_token %}
-		<h5> The score for {% for x in values.compone %} <p style="display: inline;" class="text-uppercase">{{x}}</p> is {% endfor %} this acceptable?</h5>
+		<h5> The score for {% for x in values.compone %} <p style="display: inline;" class="text-uppercase">{{x}}</p> is {% endfor %} this company your choice?</h5>
 	</div>
 
-			<input type="submit" value="Yes!" name = 'one' style="margin-bottom: 40px;">
+			<input class="btn btn-primary" type="submit" value="Yes!" name = 'one' style="margin-bottom: 40px;">
 			<input type="hidden" name = 'score' value = {{x}}>
 
 	<div class="card text-white bg-dark mb-3" style="margin: 0 auto; padding: 20px; max-width: 70rem; ">
 		{% csrf_token %}
-		<h5> The score for {% for x in values.comptwo %} <p style="display: inline;" class="text-uppercase">{{x}}</p> is {% endfor %} this acceptable?</h5>
+		<h5> The score for {% for x in values.comptwo %} <p style="display: inline;" class="text-uppercase">{{x}}</p> is {% endfor %} this company your choice?</h5>
 	</div>
-			<input type="submit" value="Yes!" name = 'two' style="margin-bottom: 40px;>
+			<input class="btn btn-primary" type="submit" value="Yes!" name = 'two' style="margin-bottom: 40px;>
 			<input type="hidden" name = {{x}}>
 	
 
 	<div class="card text-white bg-dark mb-3" style="margin: 0 auto; padding: 20px; max-width: 70rem; ">
 		{% csrf_token %}
 		<h5> The score for {% for x in values.compthree %} <p style="display: inline;" class="text-uppercase">{{x}}
-		</p> is {% endfor %} this acceptable?</h5>
+		</p> is {% endfor %} this company your choice?</h5>
 	</div>
-			<input type="submit" value="Yes!" name = 'three' style="margin-bottom: 40px;>
+			<input class="btn btn-primary" type="submit" value="Yes!" name = 'three' style="margin-bottom: 40px;>
 			<input type="hidden" name = {{x}}>
+
 		</h5>
 	</form>
 
+     <h2 style="text-align: center; padding-bottom: 20px;">Suggestions</h2>
 	<form style="padding-left: 455px;" class="form-inline">
-		<div style="margin-right: 20px;" class="alert alert-success" role="alert">
+ 		<div style="margin-right: 20px;" class="alert alert-success" role="alert">
 		  The Highest Score 
 		</div>
 		<div style="margin-right: 20px;" class="alert alert-warning" role="alert">
