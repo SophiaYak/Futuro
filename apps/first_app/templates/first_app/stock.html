@@ -6,8 +6,111 @@
 <body>
 
 
+
+
+<H2>Details</H2>
+<form action= '/scoring' method = 'post'>
+{% csrf_token %}
+
+
+<h5> The score for
+{% for x in values.compone %}
+{{x}} is
+{% endfor %}
+this acceptable?
+<input type="button" value="Yes!">
+<input type="hidden" name = {{x}} >
+</h5>
+
+<h5> The score for
+{% for x in values.comptwo %}
+{{x}} is
+{% endfor %}
+this acceptable?
+<input type="button" value="Yes!">
+<input type="hidden" name = {{x}} >
+</h5>
+
+<h5> The score for
+{% for x in values.compthree %}
+{{x}} is
+{% endfor %}
+this acceptable?
+<input type="button" value="Yes!">
+<input type="hidden" name = {{x}} >
+</h5>
+
+
+
+
+</form>
+
+
+<!-- {{values.compone}}
+<h1> The score for
+{% for x in values.compone %}
+{{x}} is
+{% endfor %}
+this acceptable?
+</h1>
+{{values.comptwo}}
+<h1> The score for
+{% for x in values.comptwo %}
+{{x}} is
+{% endfor %}
+this acceptable?
+</h1>
+{{values.compthree}}
+<h1> The score for
+{% for x in values.compthree %}
+{{x}} is
+{% endfor %}
+this acceptable?
+</h1> -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <!-- <p>Name: {{bob.name}}; PE: {{bob.PE}}; Change_pct: {{bob.change}}; Last: {{bob.last}}; Short Ratio: {{bob.short}}; As of: {{bob.time}}</p> -->
-<p><!-- 
+<!-- <p>
 {% for company  in companies %}
 Name: {{company.name}}; PE: {{company.PE}}; Change_pct: {{company.change}}; Last: {{company.last}}; Short Ratio: {{company.short}}; As of: {{company.time}} -->
 
@@ -16,7 +119,7 @@ Name: {{company.name}}; PE: {{company.PE}}; Change_pct: {{company.change}}; Last
 			 adj_close= df['Adj Close'][0],  current_date = start) -->
 
 <!-- {% endfor %} -->
-<h1>The Average difference is {{score}}
+<!-- <h1>The Average difference is {{score}}
 </h1>
 <h>Details
 </h>
@@ -27,9 +130,7 @@ Name: {{company.name}}; PE: {{company.PE}}; Change_pct: {{company.change}}; Last
 
 
 
-</p>
-
-
+</p> --> 
 
 
 

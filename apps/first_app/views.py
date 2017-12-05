@@ -57,7 +57,7 @@ def logout(request):
 	return response
 
 def basket(request):
-	context = {"number": ["one","two","three"]}
+	context = {"number": ["First","Second","Third"]}
 	measure = {}
 		
 	
@@ -94,21 +94,31 @@ def deletecompany(request):
 
 def stock(request):
 	context = {}
+	values ={}
 	key = request.session.keys()
 	end = datetime.today()
 	start = end-timedelta(days=10)
 	for company in key:
 		name = request.session.get(company)
-		score = Stock.objects.newStock(name,start)
+		score = Stock.objects.newStock(name)
+		values.update({company:[name,score]})
 		
 
-	context={'score': score,'all':Stock.objects.all()}
+	context.update({'values': values, 'items': key})
 	return render(request, "first_app/stock.html",context)
 
 def lookup( request):
 	request.session.flush()
-	name = request.POST['symb']
-	request.session[ 'symb'] = name
+	response = redirect('/stock')
+
+	# request.session['keys'] = ['compone','comptwo','compthree']
+	request.session[ 'compone'] = request.POST['First']
+	request.session[ 'comptwo'] = request.POST['Second']
+	request.session[ 'compthree'] = request.POST['Third']
+
+	return response
+def scoring (request):
+
 
 	return redirect('/stock')
 def addlookup (request):

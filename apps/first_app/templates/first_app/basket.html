@@ -7,9 +7,9 @@
 <form action= '/companylookup' method = 'post'>
 {% csrf_token %}
 {% for n in number %}
-<p>Company {{n}}:
-<input type = "text" name = 'symb'>
-<input type="hidden" name=n value= "one">
+<p>{{n}} Company:
+<input type = "text" name = {{n}}>
+
 </p>
 {% endfor %}
 <input type = "submit" value = "Submit">
