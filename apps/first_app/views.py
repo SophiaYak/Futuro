@@ -105,26 +105,7 @@ def stock(request):
 	for company in key:
 		name = request.session.get(company)
 		score = Stock.objects.newStock(name,start)
-		# q = web.get_quote_yahoo(name)
-		# #df = pd.DataFrame(q)
-		# df = pd.DataFrame(q, index = [name])
-		# #df= pd.DataFrame(q, index = ['AMZN'], columns = ['PE','change_pct','last','short_ratio','time'])
-		# info ={'keys': company, 'all': df, 'name': name,'PE': df['PE'][0], 'change': df['change_pct'][0], \
-		# 'last': df['last'][0], 'short': df['short_ratio'][0], 'time': df['time'][0]}
-		# context['companies'] =  info
-	
-
-	# name = request.session.get('bob')
-	# q = web.get_quote_yahoo(name)
-	# #df = pd.DataFrame(q)
-	# df = pd.DataFrame(q, index = [name])
-	# #df= pd.DataFrame(q, index = ['AMZN'], columns = ['PE','change_pct','last','short_ratio','time'])
-	# info ={'all': df, 'name': name,'PE': df['PE'][0], 'change': df['change_pct'][0], \
-	# 'last': df['last'][0], 'short': df['short_ratio'][0], 'time': df['time'][0]}
-	# context['bob'] =  info
-	#return render(request, "first_app/stock.html",context, keys)
-	# keys = {'marker': key}
-	# context ['keys']=key
+		
 
 	context={'score': score,'all':Stock.objects.all()}
 	return render(request, "first_app/stock.html",context)

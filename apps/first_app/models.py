@@ -50,32 +50,35 @@ class StockManager(models.Manager):
 			symbol = post['company_symbol'], price= post['company_price'])
 		return {"succeed": True, "data": new}
 
-	def newStock(self, post, start, end=datetime.today()):
+	def newStock(self, post, start=datetime.today(), end=datetime.today()):
+		# df = web.DataReader(post, "yahoo", start,end)
+		# add = 0
+		# totalshares=0
+		# index = pd.bdate_range(start,end)
+		# for entry in index.date:			
+		# 	new  = Stock.objects.create(symbol =post, open_price= df['Open'][entry], \
+		# 		high_price= df['High'][entry],  low_price = df['Low'][entry], diff=df['High'][entry]-df['Low'][entry],\
+		# 		 adj_close= df['Adj Close'][entry], volume = df['Volume'][entry], current_date = index.date[entry])
+		# 	add += (df['Volume'][entry]*df['Adj Close'][entry])
+		# 	totalshares += df['Volume'][entry]
+		# return add/totalshares
+		start=end-timedelta(days=10)#one more day than you need
 		df = web.DataReader(post, "yahoo", start,end)
 		add = 0
 		totalshares=0
 		index = pd.bdate_range(start,end)
-		for entry in index.date:			
-			new  = Stock.objects.create(symbol =post, open_price= df['Open'][entry], \
-				high_price= df['High'][entry],  low_price = df['Low'][entry], diff=df['High'][entry]-df['Low'][entry],\
-				 adj_close= df['Adj Close'][entry], volume = df['Volume'][entry], current_date = index.date[entry])
-			add += (df['Volume'][entry]*df['Adj Close'][entry])
-			totalshares += df['Volume'][entry]
+		for events in index.date:
+			try:
+				value = df.ix[events][3] * df.ix[events][5]
+				add += value
+				totalshares += df.ix[events][5]
+			except (TypeError,KeyError):
+				pass
+
 		return add/totalshares
-		
 
 
-		# q = web.get_quote_yahoo(post)
-		# #df = pd.DataFrame(q)
-		# df = pd.DataFrame(q, index = [post])
-		# #df= pd.DataFrame(q, index = ['AMZN'], columns = ['PE','change_pct','last','short_ratio','time'])
-		# new  = Stock.objects.create(symbol =post, PE= df['PE'][0], \
-		# 	change_pct= df['change_pct'][0],  last = df['last'][0],\
-		# 	 short_ratio= df['short_ratio'][0],  current_date = df['time'][0])
-		# context['companies'] =  info
-		# new  = Stock.objects.create(symbol =post, PE= df['PE'][0], \
-		# 	change_pct= df['change_pct'][0],  last = df['last'][0],\
-		# 	 short_ratio= df['short_ratio'][0],  current_date = df['time'][0])
+
 
 
 
