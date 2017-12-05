@@ -1,63 +1,5 @@
 <!DOCTYPE html>
 <html>
-<<<<<<< HEAD
-<head>
-  <title></title>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
-</head>
-<style>
-</style>
-<body>
-
-<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
-
-<!-- Image and text -->
-<nav class="navbar navbar-light bg-faded">
-  <a class="navbar-brand" href="#">
-    <img src="https://i.imgur.com/MBLi5oT.jpg" width="70" height="70" class="d-inline-block align-top" alt="">
-    Futuro
-  </a>
-</nav>
-
-{% if messages %}
-    <ul class="messages">
-        {% for message in messages %}
-        <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
-        {% endfor %}
-    </ul>
-{% endif %}
-<!-- LOGIN FORM -->
-  <h2 align="center">Login</h2>
-<form action='/login' method = 'post'>
-  {% csrf_token %}
-  <p align="center"> Username: <input type="text" placeholder="username" name="name"></p>
-  <p align="center"> Password: <input type="password" placeholder="password" name="pass"></p>
-  <p align="center"><input type="submit" value = "Login">
-</form>
-
-<form action='/registration' method = 'post'>
-  {% csrf_token %}
-    <h2 align="center">Register</h2>
-  <p align="center"> Name: <input type="text" placeholder="Full Name" name="name"></p>
-  <p align="center"> Username: <input type="text" placeholder="username" name="username" ></p>
-  <p align="center"> Email: <input type="email" placeholder="example@example.com" name="email"></p>
-  <p align="center"> Password: <input type="password" placeholder="password" name="pass"></p>
-  <p align="center"><input type="submit" value = "Register">
-</form>
-
-<!-- <form action= '/delete' method = 'post'>
-{% csrf_token %}
-{% for member in members %}
-<p align="right">username:{{member.username}}  pass:{{member.password}}</p>
-<p align="right"><button type="submit">Delete</button>
-<input type="hidden" name="user" value= {{member.username}}>
-{% endfor %}
-</form> -->
-
-</body>
-=======
   <head>
     <title></title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
@@ -86,7 +28,7 @@
             background-color: #2e5c3e;
             border-color: #2e5c3e; /*set the color you want here*/
           }
-        .btn-secondary:hover, .btn-secondary:focus, .btn-secondary:active, .btn-secondary.active, .open>.dropdown-toggle.btn-secondary {
+        .btn-secondary:hover, .btn-secondary:focus, .btn-secondary:active, .btn-secondary:active .btn-secondary.active, .open>.dropdown-toggle.btn-secondary {
             color: #fff;
             background-color: #353535;
             border-color: #353535; /*set the color you want here*/
@@ -203,5 +145,4 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
 
   </body>
->>>>>>> c8ad88b27a97aac46f0b7e1fdda679844459aeb5
 </html>
